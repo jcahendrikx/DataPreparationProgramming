@@ -32,14 +32,11 @@ creator_stats <- videos %>%
 .by = creator_id)
 
 #Small practices
+videos %>%
+  filter(watch_rate >= 0.8) %>% count()
 
-videos %>% 
-  count(watch_rate >= 0.8)
-
-#Practice 2
 videos %>%
   select(video_id, creator_id, watch_rate)
 
-#Practice 3
-videos %>%
+videos %>% 
   summarize(watch_rate, .by = creator_id)
