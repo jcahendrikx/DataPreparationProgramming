@@ -3,6 +3,7 @@ download.file(data_url, "Tutorial 1/video_view.csv")
 list.files()
 
 library(tidyverse)
+library(conflicted)
 videos <- read_csv("Tutorial 1/video_view.csv")
 
 head(videos)
@@ -22,7 +23,7 @@ Selection <- videos %>% select(video_id, creator_id, impressions_n, watched_n, w
 summary(Selection)
 
 #Codig step 8
-videos %>% filter(watch_rate > 0.7, impressions_n >= 20)
+videos %>% dplyr::filter(watch_rate > 0.7, impressions_n >= 20)
 
 #Coding step 9
 creator_stats <- videos %>%
@@ -33,10 +34,13 @@ creator_stats <- videos %>%
 
 #Small practices
 videos %>%
-  filter(watch_rate >= 0.8) %>% count()
+  dplyr::filter(watch_rate >= 0.8) %>% count()
 
 videos %>%
   select(video_id, creator_id, watch_rate)
 
-videos %>% 
-  summarize(watch_rate, .by = creator_id)
+Sorted_Watch <- videos %>% 
+  summarize(avg_watch_rate = mean(watch_rate), .by = creator_id)
+
+Sorted_Watch %>%
+  arrange(desc(avg_watch_rate))
