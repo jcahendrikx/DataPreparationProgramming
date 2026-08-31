@@ -44,3 +44,4 @@ Sorted_Watch <- videos %>%
 
 Sorted_Watch %>%
   arrange(desc(avg_watch_rate))
+ 

@@ -4,7 +4,7 @@ format: html
 ---
 
 # Tutorial 2
-Date: 31-08/2026
+Date: 31-08/2026 2:112
 Created for testing
 
 ```{r}
@@ -16,3 +16,51 @@ getwd()
 list.files()
 ```
 
+
+```{r}
+library(dplyr)
+library(here)
+data_path <- here("Tutorial 2", "video_view.csv")
+if (!file.exists(data_path)) {
+  data_url <- "https://raw.githubusercontent.com/hannesdatta/course-dprep/refs/heads/main/material/tutorials/r-bootcamp-rev/video_view.csv"
+  download.file(data_url, data_path)
+}
+videos <- read_csv(data_path)
+
+```
+
+
+```{r}
+view(videos)
+```
+
+# Example 2
+
+```{r}
+watch_share <- videos %>%
+    mutate(watch_share = watched_n / impressions_n) %>% 
+    rename(impressions = impressions_n, watch_count = watched_n) %>% 
+    arrange(desc(watch_share))
+```
+
+# Exercise 3
+
+```{r}
+creator_summary <- videos %>% 
+    group_by(creator_id) %>% 
+    summarise(videos_n = n(), impressions_total = sum(impressions_n), watch_rate_avg = mean(watch_rate)) %>% 
+    arrange(desc(impressions_total))
+
+creator_summary
+```
+
+# Exercise 4
+
+```{r}
+top_watch <- videos %>% 
+    filter(impressions_n >= 50) %>% 
+    select(video_id, creator_id, watch_rate) %>% 
+    arrange(desc(watch_rate))
+
+top_watch
+```
