@@ -171,8 +171,8 @@ dbl (15): video_id, creator_id, video_length_sec, published_at, impressions_...
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(watch_share))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="exercise-3" class="level1">
-<h1>Exercise 3</h1>
+<section id="exercise-2" class="level1">
+<h1>Exercise 2</h1>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>creator_summary <span class="ot">&lt;-</span> videos <span class="sc">%&gt;%</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(creator_id) <span class="sc">%&gt;%</span> </span>
@@ -194,6 +194,61 @@ dbl (15): video_id, creator_id, video_length_sec, published_at, impressions_...
  8         40       24               721          0.720
  9         60       35               712          0.697
 10         59       28               702          0.675
+# ℹ 50 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-3" class="level1">
+<h1>Exercise 3</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>top_watch <span class="ot">&lt;-</span> videos <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(impressions_n <span class="sc">&gt;=</span> <span class="dv">50</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(video_id, creator_id, watch_rate) <span class="sc">%&gt;%</span> </span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(watch_rate))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>top_watch</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 131 × 3
+   video_id creator_id watch_rate
+      &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+ 1      821         59      0.852
+ 2     1150         17      0.841
+ 3     1159         23      0.84 
+ 4      769         53      0.809
+ 5     1175          5      0.8  
+ 6      868         43      0.797
+ 7      132         31      0.797
+ 8      705         60      0.797
+ 9      153         19      0.796
+10       89         50      0.790
+# ℹ 121 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="exercise-4" class="level1">
+<h1>Exercise 4</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Engagement <span class="ot">&lt;-</span> videos <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">engagement =</span> watched_n <span class="sc">/</span> impressions_n) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(creator_id) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">mean_engagement =</span> <span class="fu">mean</span>(engagement)) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(mean_engagement))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Engagement</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 2
+   creator_id mean_engagement
+        &lt;dbl&gt;           &lt;dbl&gt;
+ 1         57           0.798
+ 2         49           0.786
+ 3          6           0.779
+ 4         32           0.770
+ 5         17           0.744
+ 6         31           0.727
+ 7          9           0.722
+ 8         40           0.720
+ 9         13           0.717
+10         15           0.716
 # ℹ 50 more rows</code></pre>
 </div>
 </div>
