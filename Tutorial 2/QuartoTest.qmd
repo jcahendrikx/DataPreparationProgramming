@@ -43,7 +43,7 @@ watch_share <- videos %>%
     arrange(desc(watch_share))
 ```
 
-# Exercise 3
+# Exercise 2
 
 ```{r}
 creator_summary <- videos %>% 
@@ -54,7 +54,7 @@ creator_summary <- videos %>%
 creator_summary
 ```
 
-# Exercise 4
+# Exercise 3
 
 ```{r}
 top_watch <- videos %>% 
@@ -63,4 +63,16 @@ top_watch <- videos %>%
     arrange(desc(watch_rate))
 
 top_watch
+```
+
+# Exercise 4
+
+```{r}
+Engagement <- videos %>% 
+    mutate(engagement = watched_n / impressions_n) %>% 
+    group_by(creator_id) %>% 
+    summarize(mean_engagement = mean(engagement)) %>% 
+    arrange(desc(mean_engagement))
+
+Engagement
 ```
