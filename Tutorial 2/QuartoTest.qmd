@@ -3,12 +3,14 @@ title: "Quarto Test Tutorial 2"
 format: html
 ---
 
+
 # Tutorial 2
 Date: 31-08/2026 2:112
 Created for testing
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
 ```
 
 ```{r}
@@ -27,11 +29,6 @@ if (!file.exists(data_path)) {
 }
 videos <- read_csv(data_path)
 
-```
-
-
-```{r}
-view(videos)
 ```
 
 # Example 2
@@ -75,4 +72,26 @@ Engagement <- videos %>%
     arrange(desc(mean_engagement))
 
 Engagement
+```
+
+
+```{r}
+scatterplot <- ggplot(data = videos, aes(x = impressions_n, y = watch_rate, color = video_length_sec)) +
+  geom_point(na.rm = FALSE, alpha = 0.6, size = 2.5) +
+  labs(
+    title = "Watch Rate vs. Impressions",
+    subtitle = "Performance metrics by video length",
+    x = "Impressions",
+    y = "Watch Rate (%)",
+    color = "Length of Video (Seconds)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold", hjust = 0.5),
+    plot.subtitle = element_text(size = 11, color = "gray40"),
+    axis.title = element_text(size = 11, face = "bold"),
+    legend.position = "right"
+  )
+
+scatterplot
 ```
